@@ -25,3 +25,6 @@ dist-ssr
 
 # vitest coverage
 coverage
+
+# web container
+src/utils/files.js

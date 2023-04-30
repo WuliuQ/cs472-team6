@@ -17,6 +17,13 @@ export const devViewState = create((set) => ({
     setDevView: (isDevView) => set(() => ({ isDevView: isDevView }))
 }))
 
+export const ExportModalState = create((set) => ({
+  shown: false,
+  loading: false,
+  setShown: (shown) => set(() => ({ shown })),
+  setLoading: (loading) => set(() => ({ loading }))
+}))
+
 export const PageState = create((set) => ({
     componentsList: [],
     pageOptions: new PageOptions({}),
@@ -66,5 +73,5 @@ export const PageState = create((set) => ({
         return ({ componentsList: components })
 
     }),
-    removeComponent: (id) => set((state) => ({ componentsList: state.componentsList.filter(component => component.id !== id) }))
+    removeComponent: (id) => set((state) => ({ componentsList: state.componentsList.filter(component => component.id !== id) })),
 }))

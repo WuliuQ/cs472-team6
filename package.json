@@ -4,15 +4,19 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host 0.0.0.0",
+    "dev": "npm run fs && vite --host 0.0.0.0",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "npm run fs && vite build",
+    "preview": "vite preview",
+    "fs": "node ./filesystem.js"
   },
   "dependencies": {
+    "@webcontainer/api": "^1.1.3",
+    "file-saver": "^2.0.5",
     "happy-dom": "^8.9.0",
+    "jszip": "^3.10.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-test-renderer": "^18.2.0",

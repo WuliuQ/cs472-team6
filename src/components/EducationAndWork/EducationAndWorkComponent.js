@@ -10,12 +10,19 @@ export const EducationAndWorkComponent = new Component(
     EducationWorkExperienceOptions,
     EducationWorkExperiencePreview,
     {
-        school1: 'School 1; Degree; Date',
-        school2: 'School 2; Degree; Date',
-        school3: 'School 3; Degree; Date',
-        job1: 'Company 1; Title; Date',
-        job2: 'Company 2; Title; Date',
-        job3: 'Company 3; Title; Date',
+        schoolCount: 3,
+        jobCount: 3,
+        schoolList: [
+            {primary: "School 1", secondary: "Degree", date: "Date"},
+            {primary: "School 2", secondary: "Degree", date: "Date"},
+            {primary: "School 3", secondary: "Degree", date: "Date"},
+        ],
+        jobList: [
+            {primary: "Job 1", secondary: "Title", date: "Date"},
+            {primary: "Job 2", secondary: "Title", date: "Date"},
+            {primary: "Job 3", secondary: "Title", date: "Date"},
+        ],
+
         gradient: Gradients.default
     }
 )

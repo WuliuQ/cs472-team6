@@ -1,8 +1,6 @@
-export default function SkillsOptions({
-  options,
-  updateComponent,
-}) {
-    let { title, skillsList } = options;
+export default function SkillsOptions({options, updateComponent}) 
+{
+    let { title, noOfSkills, skillsList } = options;
 
     function handleChange(e){
         updateComponent({ [e.target.name]: e.target.value });
@@ -16,24 +14,21 @@ export default function SkillsOptions({
     }
 
     function handleImageChange(index, e){
-        let newSkills = [...skillsList];
+        if(e.target.files.length > 0){
+            let newSkills = [...skillsList];
+            const file = e.target.files[0];
+            const reader = new FileReader();
 
-        newSkills[index] = {...newSkills[index], [e.target.name]: e.target.files};
-
-        updateComponent({ skillsList: newSkills });
-    }
-
-    function handleImageClick(index, e){
-        let newSkills = [...skillsList];
-
-        newSkills[index] = {...newSkills[index], [e.target.name]: ""};
-        newSkills[index] = {...newSkills[index], image: ""};
-
-        updateComponent({ skillsList: newSkills });
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                newSkills[index] = {...newSkills[index], [e.target.name]: reader.result};
+                updateComponent({ skillsList: newSkills });
+            };
+        }
     }
 
     return (
-        <div className="pl-3 pb-3 pr-3">
+        <div className="px-5 pb-3">
             <label className="block">Title:</label>
             <input 
                 className={`block mb-3 p-2 rounded-lg bg-gray-200`} 
@@ -43,8 +38,12 @@ export default function SkillsOptions({
                 onChange={(handleChange)} 
             />
             <details className="bg-white mx-1 rounded-lg" open>
-                <summary className="mb-2 cursor-pointer"> Skills List </summary>
-                {skillsList.map((skill, index) => <SkillOptions key={index} index={index} skill={skill} handleNameChange={handleNameChange} handleImageChange={handleImageChange} handleImageClick={handleImageClick}/>)}
+            <summary className="mb-2 cursor-pointer"> Skills List </summary>
+            <div className="px-2">
+                    <label className="block">Number of Skills (max. 5)</label>
+                    <input className="block mb-3 p-2 rounded-lg bg-gray-200" type="number" name="noOfSkills" value={noOfSkills} min="1" max="5" onChange={(handleChange)}/>       
+                    {skillsList.slice(0,noOfSkills).map((skill, index) => <SkillOptions key={index} index={index} skill={skill} handleNameChange={handleNameChange} handleImageChange={handleImageChange}/>)}
+                </div>
             </details>
         
         </div>
@@ -52,13 +51,13 @@ export default function SkillsOptions({
     );
 }
 
-function SkillOptions({index, skill, handleNameChange, handleImageChange, handleImageClick}){
+function SkillOptions({index, skill, handleNameChange, handleImageChange}){
     const {name, files, image} = skill;
     return(
-        <div className="flex flex-col flex-1 px-1">
+        <div className="flex flex-col flex-1">
             <details className="bg-white mt-3 rounded-lg">
                 <summary className="mb-2 cursor-pointer"> Skill {index+1}: {name}</summary>
-                    <div className="px-3">
+                    <div className="px-2">
                         <label className="block">Name:</label>
                         <input 
                             className={`block mb-3 p-2 rounded-lg bg-gray-200 `} 
@@ -71,9 +70,8 @@ function SkillOptions({index, skill, handleNameChange, handleImageChange, handle
                         <input 
                             className="block w-full text-sm text-black cursor-pointer" 
                             type="file"
-                            name="files"
+                            name="image"
                             accept="image/png, image/jpeg, image/svg+xml"
-                            onClick={e => handleImageClick(index, e)}
                             onChange={e => handleImageChange(index, e)}
                         />
                         <p className="mt-2 ml-1 text-xs" id="file_input_help">PNG, JPG, or SVG.</p>

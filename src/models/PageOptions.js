@@ -10,6 +10,6 @@ export default class PageOptions {
         this.icon = icon ?? ''
         this.author = author ?? ''
         this.description = description ?? 'My Portfolio'
-        this.language = language ?? 'en-US'
+        this.language = language ?? 'en'
     }
 }
